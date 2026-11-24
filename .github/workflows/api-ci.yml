@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  test-api:
+  unit-test:
     runs-on: ubuntu-latest
 
     defaults:
@@ -24,3 +24,18 @@ jobs:
 
       - name: Run tests
         run: uv run --locked python -m pytest -v
+  
+  build-image:
+    needs: unit-test
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: services/pipeline-status-api
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      
+      - name: Build Docker image
+        run: docker build -t pipeline-status-api:ci .
