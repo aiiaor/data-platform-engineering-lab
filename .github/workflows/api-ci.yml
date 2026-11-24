@@ -20,7 +20,7 @@ jobs:
         uses: astral-sh/setup-uv@v9
 
       - name: Install dependencies
-        uses: uv sync --locked
+        run: uv sync --locked
 
       - name: Run tests
         run: uv run --locked python -m pytest -v
