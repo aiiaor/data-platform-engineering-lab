@@ -1,0 +1,15 @@
+services:
+
+  api-services:
+    image: pipeline-status-api:latest
+    build: services/pipeline-status-api
+    environment:
+      INSTANCE_NAME: api-services
+
+  nginx: 
+    image: services-nginx:latest
+    build: infrastructure/nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - api-services

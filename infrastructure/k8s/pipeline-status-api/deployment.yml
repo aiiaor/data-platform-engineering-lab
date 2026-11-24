@@ -1,0 +1,44 @@
+# Which Kubernetes API understands this type of resource.
+apiVersion: apps/v1
+
+# The type of resource you want Kubernetes to create.
+kind: Deployment
+
+# Information that identifies the Deployment itself.
+metadata:
+  name: pipeline-status-api
+  labels:
+    app: pipeline-status-api
+
+# The desired configuration for this Deployment.
+spec:
+  # Keep two copies of the Pod running.
+  replicas: 2
+
+  # Find the Pods that belong to this Deployment.
+  selector:
+    matchLabels:
+      app: pipeline-status-api
+
+  # Blueprint for the Pods the Deployment creates.
+  template:
+    metadata:
+      # Labels to attach to each created Pod.
+      labels:
+        app: pipeline-status-api
+
+    # Configuration for each Pod.
+    spec:
+      containers:
+        # Name of the container inside each Pod.
+        - name: pipeline-status-api
+
+          # Docker image to run.
+          image: pipeline-status-api:phase3
+
+          # When to download the image.
+          imagePullPolicy: IfNotPresent
+
+          # Port the application listens on inside the container.
+          ports:
+            - containerPort: 8000

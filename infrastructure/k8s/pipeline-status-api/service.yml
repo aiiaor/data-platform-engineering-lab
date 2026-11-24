@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pipeline-status-api-service
+  namespace: dpe-lab
+  labels:
+    app: pipeline-status-api
+spec:
+  type: ClusterIP  # Default type; exposes the service on a cluster-internal IP
+  selector:
+    app: pipeline-status-api    # Must match the labels defined in your Pod/Deployment template
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8000        # Port exposed by the Service inside the cluster
+      targetPort: 8000 # Port the application is actually listening on inside the container
